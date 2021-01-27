@@ -3,15 +3,15 @@ sebelum apply kita bisa lihat dl scriptnya tambahin parameter alter=1
 kalau udah fix tinggal masukkin alteryes
 --->
 
-<cfsetting showdebugoutput="Yes">
-<cfparam name="url.source" default="dbtemp">
-<cfparam name="url.target" default="dbsf6_saas">
+<cfsetting showdebugoutput="no">
+<cfparam name="url.source" default="dbsf_enjiniring_secondary_training">
+<cfparam name="url.target" default="dbsf_enjiniring_secondary_development">
 
 <cfparam name="url.dbsrctype" default="MariaDB">
 <cfparam name="url.dbdsttype" default="MariaDB">
 
-<cfparam name="url.dbsrc" default="dbtemp">
-<cfparam name="url.dbdst" default="dbsf6_saas_portal">
+<cfparam name="url.dbsrc" default="dbsf_nbc_enjiniring_training">
+<cfparam name="url.dbdst" default="dbdev">
 
 <cfoutput>
 <!--- target --->
@@ -45,6 +45,7 @@ kalau udah fix tinggal masukkin alteryes
 		SELECT * FROM Information_Schema.TABLES 
 		where table_type = 'BASE TABLE' 
 		and table_schema = '#url.dbsrc#'
+		and table_name = 'bakup_config_21042020'
 		and
 		(
 		table_name not like '%_2017%'
@@ -206,10 +207,12 @@ kalau udah fix tinggal masukkin alteryes
 		where table_type = 'BASE TABLE'
 		<!---  and table_name not in ('dtproperties','Results')  --->
 		and table_schema = '#url.dbdst#'
+		and table_name = 'bakup_config_21042020'
 		order by table_name 
 	</cfquery>
 </cfif>
-<cfdump var='#qTable2#' label='qTable2' expand='yes'>
+<!--- <cfdump var='#qTable1#' label='qTable1' expand='yes'>
+<cfdump var='#qTable2#' label='qTable2' expand='yes'> --->
 
 <cfset TargetTable = ValueList(qTable2.table_name)>
 
@@ -217,6 +220,8 @@ kalau udah fix tinggal masukkin alteryes
 	<cfdump var="#qTable1#">
 	<cfabort>
 </cfif>
+
+<!--- marcabort line:<cfabort> --->
 
 <cfloop query="qTable1">
 	<cfset TableCheck = qTable1.table_name>
@@ -249,25 +254,30 @@ kalau udah fix tinggal masukkin alteryes
 			<cfelse><!--- if UCase(url.dbsrctype) eq "MSSQLSERVER" --->
 				<cfquery name="qColumns2" datasource="#SourceDSN#">
 					SELECT DISTINCT TABLE_NAME,COLUMN_NAME,ORDINAL_POSITION,COLUMN_DEFAULT
-						,IS_NULLABLE,DATA_TYPE,CHARACTER_MAXIMUM_LENGTH
+						,IS_NULLABLE,DATA_TYPE,CHARACTER_MAXIMUM_LENGTH,
+						<!--- add by Marc --->
+						<cfif UCase(url.dbsrctype) eq "mariadb">
+							column_type
+						</cfif>
 					FROM  Information_Schema.COLUMNS 
 					where UPPER(table_name) = '#UCase(TableCheck)#'
 					Order by Ordinal_Position
 				</cfquery>
+				<!--- <cfdump var='#qColumns2#' label='qColumns2' expand='yes'> --->
 				<cftry>
 					<cfquery name="qidentity" datasource="#SourceDSN#">
 						SELECT TOP 1 IDENTITYCOL
 						From "#UCase(TableCheck)#"
 					</cfquery>
 					<cfset colname = UCase(qidentity.columnlist)>
-				<cfcatch></cfcatch>
+				<cfcatch>#cfcatch.message#</cfcatch>
 				</cftry>
 			</cfif>
  			<table border="1" width="500"> 
  				<tr><td>ADD TABLE</td><td bgcolor="C0C0C0"><b><!--- <font color="##0000ff">#UCase(SourceDSN)#</font>. ---><font color="##ff0000">#TableCheck#</font><!--- &nbsp;(#Ucase(url.dbsrctype)#) ---></b></td></tr> 
 
 			<cfif isdefined("alter")>
-				<cfif url.dbdsttype neq "ORACLE">
+				<cfif url.dbdsttype eq "MSSQLSERVER">
 					<cfset crtable="dbo.#TableCheck#">
 				<cfelse>
 					<cfset crtable=TableCheck>
@@ -279,6 +289,8 @@ kalau udah fix tinggal masukkin alteryes
 			<cfloop query="qColumns2">
 				<cfif UCase(url.dbsrctype) eq "ORACLE">
 					<cfset data_length = data_length>
+				<cfelseif UCase(url.dbsrctype) eq "MARIADB">
+					<cfset data_length = column_type>
 				<cfelse><!--- if UCase(url.dbsrctype) eq "MSSQLSERVER" --->
 					<cfset data_length = ucase(character_maximum_length)>
 				</cfif>
@@ -307,21 +319,30 @@ kalau udah fix tinggal masukkin alteryes
 							<cfset Tdata_type = ListGetAt(SQLDataType,ListFindNoCase(OraDataType,qColumns2.data_type))>
 						</cfif>
 					<cfelse>
-						<cfset Tdata_type = qColumns2.data_type>
+						<!--- Remarked by Marc :
+						<cfset Tdata_type = qColumns2.data_type> --->
+						<!--- Add by Marc --->
+						<cfset Tdata_type = qColumns2.column_type>
 					</cfif>
-					
 					<cfif colcount gt 0>
 						<cfset dbcreate = dbcreate & ", ">
 					</cfif>
+					
 					<cfif UCase(url.dbdsttype) eq "ORACLE">
 						<cfset dbcreate = dbcreate & "#UCase(column_name)# #UCase(Tdata_type)# ">
-					<cfelse><!--- if UCase(url.dbdsttype) eq "MSSQLSERVER" --->
+					<cfelseif UCase(url.dbdsttype) eq "MSSQLSERVER">
 					 	<cfset dbcreate = dbcreate & "[#UCase(column_name)#] #UCase(Tdata_type)# ">
 						<cfif colname eq qColumns2.column_name>
 							<cfset dbcreate = dbcreate & "IDENTITY (1,1) ">
 						</cfif>
+					<!--- add by Marc --->
+					<cfelse><!--- if UCase(url.dbdsttype) eq "mariadb/mysql" --->
+						<cfset dbcreate = dbcreate & "#lcase(column_name)# #lcase(Tdata_type)# ">
+					   	<cfif colname eq qColumns2.column_name>
+						   <cfset dbcreate = dbcreate & "IDENTITY (1,1) ">
+					   	</cfif>
 					</cfif>
-					<cfif NOT ListFindNoCase(NonAtribut,Tdata_Type) AND data_length neq "">
+					<!--- <cfif NOT ListFindNoCase(NonAtribut,Tdata_Type) AND data_length neq "">
 					      <cfif data_length eq "-1">
 						     <cfset data_length="MAX">
                           </cfif>
@@ -333,7 +354,7 @@ kalau udah fix tinggal masukkin alteryes
                               </cfif>
                           </cfif>
 						  <cfset dbcreate = dbcreate & "(#data_length#) ">
-                     </cfif>
+                     </cfif> --->
 					<cfset colcount = colcount + 1>
 				</cfif>
 			</cfloop>
@@ -376,7 +397,7 @@ kalau udah fix tinggal masukkin alteryes
 
  			</table> 
 		</cfif>
-	<cfelse>
+	<cfelse> <!--- Sync Column --->
 		<cfif UCase(url.dbdsttype) eq "ORACLE">
 			<cfquery name="qColumns1" datasource="#TargetDSN#">
 				select column_name, data_type, data_length from user_tab_columns where UPPER(table_name) = '#UCase(TableCheck)#'
@@ -388,8 +409,10 @@ kalau udah fix tinggal masukkin alteryes
 					,IS_NULLABLE,DATA_TYPE,CHARACTER_MAXIMUM_LENGTH
 				FROM  Information_Schema.COLUMNS 
 				where UPPER(table_name) = '#UCase(TableCheck)#'
+				and table_schema = '#dbdst#'
 				Order by Ordinal_Position
 			</cfquery>
+			<cfdump var='#qColumns1#' label='qColumns1' expand='yes'>
 		</cfif>
 		<cfset TargetColumns = UCase(ValueList(qColumns1.column_name))>
 		<cfset TargetColumns = ListQualify(TargetColumns,"'",",","CHAR")>
@@ -421,12 +444,14 @@ kalau udah fix tinggal masukkin alteryes
 		<cfelse><!--- if UCase(url.dbsrctype) eq "MSSQLSERVER" --->
 			<cfquery name="qColumns2" datasource="#SourceDSN#">
 				SELECT DISTINCT TABLE_NAME,COLUMN_NAME,ORDINAL_POSITION,COLUMN_DEFAULT
-					,IS_NULLABLE,DATA_TYPE,CHARACTER_MAXIMUM_LENGTH
+					,IS_NULLABLE,DATA_TYPE,CHARACTER_MAXIMUM_LENGTH, column_type
 				FROM  Information_Schema.COLUMNS 
 				where UPPER(table_name) = '#UCase(TableCheck)#'
+				and table_schema = '#dbsrc#'
 				and UPPER(column_name) not in (#PreserveSinglequotes(TargetColumns)#)
 				Order by Ordinal_Position
 			</cfquery>
+			<cfdump var='#qColumns2#' label='qColumns2' expand='yes'>
 			<cftry>
 					<cfquery name="qIdenCheck" datasource="#SourceDSN#">
 						SELECT TOP 1 IDENTITYCOL
@@ -438,8 +463,8 @@ kalau udah fix tinggal masukkin alteryes
 		</cfif>
 		
 		<!--- <cfif idencol neq "">
-			<cfset idencoltgt = "">
-			<cfif UCase(url.dbdsttype) eq "ORACLE">
+				<cfset idencoltgt = "">
+				<cfif UCase(url.dbdsttype) eq "ORACLE">
 				<cfquery name="qIdenCheckTgt" datasource="#TargetDSN#">
 					select table_name, trigger_body from user_triggers
 					where UPPER(table_name) = '#UCase(TableCheck)#'
@@ -538,22 +563,41 @@ kalau udah fix tinggal masukkin alteryes
 					<cfif url.dbdsttype neq url.dbsrctype>
 						<cfif UCase(url.dbdsttype) eq "ORACLE">
 							<cfset Tdata_type = ListGetAt(OraDataType,ListFindNoCase(SQLDataType,qColumns2.data_type))>
-						<cfelse><!--- if UCase(url.dbdsttype) eq "MSSQLSERVER" --->
+						<cfelseif UCase(url.dbdsttype) eq "MSSQLSERVER">
 							<cfset Tdata_type = ListGetAt(SQLDataType,ListFindNoCase(OraDataType,qColumns2.data_type))>
+						<cfelse>
+							<cfset Tdata_type = qColumns2.column_type>
 						</cfif>
 					<cfelse>
-						<cfset Tdata_type = qColumns2.data_type>
+						<cfset Tdata_type = qColumns2.column_type>
 					</cfif>
 					<tr><td>SCRIPT</td><td>#UCase(TableCheck)#</td>
 						<td>
 						ALTER TABLE #UCase(TableCheck)#
-						ADD <cfif UCase(url.dbdsttype) eq "ORACLE">#UCase(column_name)#<cfelse>[#UCase(column_name)#]</cfif> #UCase(Tdata_type)# <cfif NOT ListFindNoCase(NonAtribut,Tdata_Type) AND data_length neq ""><cfif data_length eq "-1"><cfset data_length="MAX"></cfif>(#data_length#)</cfif>			
+						ADD 
+						<cfif UCase(url.dbdsttype) eq "ORACLE">
+							#UCase(column_name)#
+						<cfelse>
+							#UCase(column_name)#
+						</cfif> 
+						#UCase(Tdata_type)# 
+							<!--- <cfif NOT ListFindNoCase(NonAtribut,Tdata_Type) AND data_length neq "">
+								<cfif data_length eq "-1">
+									<cfset data_length="MAX">
+								</cfif>(#data_length#)
+							</cfif>			 --->
 					</td></tr>
 					<cfif isdefined("alteryes")>
 					<!--- SCRIPT ADD COLUMN --->
 					<cfquery name="qAlter" datasource="#TargetDSN#">
 					 	ALTER TABLE #UCase(TableCheck)#
-						ADD <cfif UCase(url.dbdsttype) eq "ORACLE">#UCase(column_name)#<cfelse>[#UCase(column_name)#]</cfif> #UCase(Tdata_type)# <cfif NOT ListFindNoCase(NonAtribut,Tdata_Type) AND data_length neq ""><cfif data_length eq "-1"><cfset data_length="MAX"></cfif>(#data_length#)</cfif>
+						ADD <cfif UCase(url.dbdsttype) eq "ORACLE"> #UCase(column_name)#<cfelse> #lcase(column_name)#</cfif> #lcase(Tdata_type)# 
+							<!--- <cfif NOT ListFindNoCase(NonAtribut,Tdata_Type) AND data_length neq "">
+								<cfif data_length eq "-1">
+									<cfset data_length="MAX">
+								</cfif>
+									(#data_length#)
+							</cfif> --->
 					</cfquery>
 					</cfif>
 					<!--- add yohanes, 10 Mei 2012 --->
