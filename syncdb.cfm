@@ -1,17 +1,16 @@
 <!--- 
 sebelum apply kita bisa lihat dl scriptnya tambahin parameter alter=1
 kalau udah fix tinggal masukkin alteryes
---->
-
+ --->
 <cfsetting showdebugoutput="no">
-<cfparam name="url.source" default="dbsf_enjiniring_secondary_training">
-<cfparam name="url.target" default="dbsf_enjiniring_secondary_development">
+<cfparam name="url.source" default="dbsf_mtindonesia">
+<cfparam name="url.target" default="dbsf_mtindonesia_secondary_training">
 
-<cfparam name="url.dbsrctype" default="MariaDB">
 <cfparam name="url.dbdsttype" default="MariaDB">
+<cfparam name="url.dbsrctype" default="MariaDB">
 
-<cfparam name="url.dbsrc" default="dbsf_nbc_enjiniring_training">
-<cfparam name="url.dbdst" default="dbdev">
+<cfparam name="url.dbsrc" default="dbsf_nbc_mtindonesia">
+<cfparam name="url.dbdst" default="dbsf_nbc_mtindonesia_training">
 
 <cfoutput>
 <!--- target --->
@@ -45,15 +44,17 @@ kalau udah fix tinggal masukkin alteryes
 		SELECT * FROM Information_Schema.TABLES 
 		where table_type = 'BASE TABLE' 
 		and table_schema = '#url.dbsrc#'
-		and table_name = 'bakup_config_21042020'
+		<!--- and table_name = 'bakup_config_21042020' --->
 		and
 		(
 		table_name not like '%_2017%'
-		or table_name not like '%_2018%'
-		or table_name not like '%_dum%'
-		or table_name not like '%_bck%'
-		or table_name not like '%_bak%'
-		or table_name not like '%_backup%'
+		and table_name not like '%_2018%'
+		and table_name not like '%_dum%'
+		and table_name not like '%_bck%'
+		and table_name not like '%_bak%'
+		and table_name not like '%_backup%'
+		and table_name not like 'backup%'
+		and table_name not like 'bu_%'
 		)
 
 		<!---
@@ -207,12 +208,12 @@ kalau udah fix tinggal masukkin alteryes
 		where table_type = 'BASE TABLE'
 		<!---  and table_name not in ('dtproperties','Results')  --->
 		and table_schema = '#url.dbdst#'
-		and table_name = 'bakup_config_21042020'
+		<!--- and table_name = 'bakup_config_21042020' --->
 		order by table_name 
 	</cfquery>
 </cfif>
-<!--- <cfdump var='#qTable1#' label='qTable1' expand='yes'>
-<cfdump var='#qTable2#' label='qTable2' expand='yes'> --->
+<!--- <cfdump var='#qTable1#' label='qTable1' expand='yes'> --->
+<!--- <cfdump var='#qTable2#' label='qTable2' expand='yes'>  --->
 
 <cfset TargetTable = ValueList(qTable2.table_name)>
 
@@ -261,9 +262,10 @@ kalau udah fix tinggal masukkin alteryes
 						</cfif>
 					FROM  Information_Schema.COLUMNS 
 					where UPPER(table_name) = '#UCase(TableCheck)#'
+					and table_schema = '#dbsrc#'
 					Order by Ordinal_Position
 				</cfquery>
-				<!--- <cfdump var='#qColumns2#' label='qColumns2' expand='yes'> --->
+					<!--- <cfdump var='#qColumns2#' label='qColumns2' expand='yes'> --->
 				<cftry>
 					<cfquery name="qidentity" datasource="#SourceDSN#">
 						SELECT TOP 1 IDENTITYCOL
@@ -337,7 +339,7 @@ kalau udah fix tinggal masukkin alteryes
 						</cfif>
 					<!--- add by Marc --->
 					<cfelse><!--- if UCase(url.dbdsttype) eq "mariadb/mysql" --->
-						<cfset dbcreate = dbcreate & "#lcase(column_name)# #lcase(Tdata_type)# ">
+						<cfset dbcreate = dbcreate & "`#lcase(column_name)#` #lcase(Tdata_type)# ">
 					   	<cfif colname eq qColumns2.column_name>
 						   <cfset dbcreate = dbcreate & "IDENTITY (1,1) ">
 					   	</cfif>
@@ -412,7 +414,7 @@ kalau udah fix tinggal masukkin alteryes
 				and table_schema = '#dbdst#'
 				Order by Ordinal_Position
 			</cfquery>
-			<cfdump var='#qColumns1#' label='qColumns1' expand='yes'>
+			<!---  <cfdump var='#qColumns1#' label='qColumns1' expand='yes'> ---> 
 		</cfif>
 		<cfset TargetColumns = UCase(ValueList(qColumns1.column_name))>
 		<cfset TargetColumns = ListQualify(TargetColumns,"'",",","CHAR")>
@@ -451,7 +453,7 @@ kalau udah fix tinggal masukkin alteryes
 				and UPPER(column_name) not in (#PreserveSinglequotes(TargetColumns)#)
 				Order by Ordinal_Position
 			</cfquery>
-			<cfdump var='#qColumns2#' label='qColumns2' expand='yes'>
+			<!--- <cfdump var='#qColumns2#' label='qColumns2' expand='yes'> --->
 			<cftry>
 					<cfquery name="qIdenCheck" datasource="#SourceDSN#">
 						SELECT TOP 1 IDENTITYCOL
@@ -545,7 +547,7 @@ kalau udah fix tinggal masukkin alteryes
   				<tr>
 					<td>ADD COLUMN</td>
 					<td>#UCase(TableCheck)#</td>
-					<td width="50%">#UCase(qColumns2.column_name)#</td>
+					<td width="50%">`#UCase(qColumns2.column_name)#`</td>
 					<td width="25%">#UCase(qColumns2.data_type)#</td>
 					<td width="25%">#data_length#&nbsp;</td>
 				</tr>
@@ -578,7 +580,7 @@ kalau udah fix tinggal masukkin alteryes
 						<cfif UCase(url.dbdsttype) eq "ORACLE">
 							#UCase(column_name)#
 						<cfelse>
-							#UCase(column_name)#
+							`#UCase(column_name)#`wew
 						</cfif> 
 						#UCase(Tdata_type)# 
 							<!--- <cfif NOT ListFindNoCase(NonAtribut,Tdata_Type) AND data_length neq "">
@@ -591,7 +593,7 @@ kalau udah fix tinggal masukkin alteryes
 					<!--- SCRIPT ADD COLUMN --->
 					<cfquery name="qAlter" datasource="#TargetDSN#">
 					 	ALTER TABLE #UCase(TableCheck)#
-						ADD <cfif UCase(url.dbdsttype) eq "ORACLE"> #UCase(column_name)#<cfelse> #lcase(column_name)#</cfif> #lcase(Tdata_type)# 
+						ADD <cfif UCase(url.dbdsttype) eq "ORACLE"> #UCase(column_name)#<cfelse> `#lcase(column_name)#`</cfif> #lcase(Tdata_type)# 
 							<!--- <cfif NOT ListFindNoCase(NonAtribut,Tdata_Type) AND data_length neq "">
 								<cfif data_length eq "-1">
 									<cfset data_length="MAX">
