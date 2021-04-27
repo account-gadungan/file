@@ -1,0 +1,28 @@
+before:
+IIF(SHIFTCODE EQ "SHWFH" ,DE("WFH"),"")
+
+after: 
+IIF(SHIFTCODE EQ "SHWFH" and
+!listFindNoCase(LSTATTENDSTS, 'anl') and
+!listFindNoCase(LSTATTENDSTS, 'bpt') and 
+!listFindNoCase(LSTATTENDSTS, 'comp') and
+!listFindNoCase(LSTATTENDSTS, 'cst') and 
+!listFindNoCase(LSTATTENDSTS, 'dif') and
+!listFindNoCase(LSTATTENDSTS, 'ecb') and
+!listFindNoCase(LSTATTENDSTS, 'gvl') and
+!listFindNoCase(LSTATTENDSTS, 'haid') and
+!listFindNoCase(LSTATTENDSTS, 'lol') and
+!listFindNoCase(LSTATTENDSTS, 'mat') and
+!listFindNoCase(LSTATTENDSTS, 'matoff') and
+!listFindNoCase(LSTATTENDSTS, 'mc') and
+!listFindNoCase(LSTATTENDSTS, 'mdl') and
+!listFindNoCase(LSTATTENDSTS, 'PERMIT') and
+!listFindNoCase(LSTATTENDSTS, 'pfp') and
+!listFindNoCase(LSTATTENDSTS, 'pil') and
+!listFindNoCase(LSTATTENDSTS, 'pl') and
+!listFindNoCase(LSTATTENDSTS, 'sdc') and
+!listFindNoCase(LSTATTENDSTS, 'sl') and
+!listFindNoCase(LSTATTENDSTS, 'swc') and
+!listFindNoCase(LSTATTENDSTS, 'upl') and
+!listFindNoCase(LSTATTENDSTS, 'vl') and
+!listFindNoCase(LSTATTENDSTS, 'wed'),DE("WFH"),"")
