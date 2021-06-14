@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- 
+Path placeholders: 
+	{lucee-server}: path to the Lucee server directory typical where the Lucee.jar is located
+	{lucee-config}: same as {lucee-server} in server context and same as {lucee-web} in web context}
+	{temp-directory}: path to the temp directory of the current user of the system
+	{home-directory}: path to the home directory of the current user of the system
+	{web-root-directory}: path to the web root
+	{system-directory}: path to thesystem directory
+	{web-context-hash}: hash of the web context
+
+--><cfLuceeConfiguration default-hspw="8ae397574a5cbb3a1df3c23bc5a45efb609ceccbfd2392e7f997e004d40f2b49" hspw="8ae397574a5cbb3a1df3c23bc5a45efb609ceccbfd2392e7f997e004d40f2b49" salt="F56653FE-FF51-4E78-8D2D3000C256BA1D" version="5.2">
+
+	<!--
+	system:
+	
+		out (output-stream)
+			- default (write out to default output stream)
+			- null (write no output)
+			- class:<class> (class that implements java.io.PrintWriter)
+			- file:<file> (file to write in)
+	
+		err (err-stream)
+			- default (write out to default output stream)
+			- null (write no output)
+			- class:<class> (class that implements java.io.PrintWriter)
+			- file:<file> (file to write in)
+	-->
+	<system err="default" out="null"/>
+
+
+<!--	definition of all database used inside your application. 										-->
+<!--	above you can find some definition of jdbc drivers (all this drivers are included at lucee) 	-->
+<!--	for other database drivers see at: 																-->
+<!--	 - http://servlet.java.sun.com/products/jdbc/drivers 											-->
+<!--	 - http://sourceforge.net 																		-->
+<!--	or ask your database distributor 																-->
+	<data-sources psq="false">
+	<data-source allow="511" blob="true" class="org.gjt.mm.mysql.Driver" clob="true" connectionLimit="100" connectionTimeout="10" custom="" database="dbsf6_saas" dbdriver="Other" dsn="jdbc:mysql://10.181.26.40:3306/dbsf6_saas_mtindonesia?SelectMethod=direct&amp;noAccessToProcedureBodies=true&amp;allowMultiQueries=true&amp;sendStringParametersAsUnicode=false" host="" metaCacheTimeout="60000" name="dbsf6_saas" param-delimiter="&amp;" param-leading-delimiter="?" param-separator="=" password="encrypted:9a68ccffcef0efc02e7e3ee1e758e2af97ec2042b3984de16544a3764e16444a" port="-1" queryTimeout="-1" storage="false" username="sst_user" validate="false"/><data-source allow="511" blob="true" class="org.gjt.mm.mysql.Driver" clob="true" connectionLimit="100" connectionTimeout="10" custom="" database="dbsf_mtindonesia" dbdriver="Other" dsn="jdbc:mysql://10.181.26.40:3306/dbsf_nbc_mtindonesia?SelectMethod=direct&amp;noAccessToProcedureBodies=true&amp;allowMultiQueries=true&amp;sendStringParametersAsUnicode=false" host="" metaCacheTimeout="60000" name="dbsf_mtindonesia" param-delimiter="&amp;" param-leading-delimiter="?" param-separator="=" password="encrypted:509a5a08168665ea6a1e385e864a048598d76685738ec9777a6a5cbf1ba54b38d3a8acc68310ac0a" port="-1" queryTimeout="-1" storage="false" username="sfnbc_mtindonesia_admin" validate="false"/><data-source allow="511" blob="true" class="org.gjt.mm.mysql.Driver" clob="true" connectionLimit="100" connectionTimeout="10" custom="" database="dbsf_mtindonesia_client" dbdriver="Other" dsn="jdbc:mysql://10.181.26.40:3306/dbsf_nbc_mtindonesia?SelectMethod=direct&amp;noAccessToProcedureBodies=true&amp;allowMultiQueries=true&amp;sendStringParametersAsUnicode=false" host="" metaCacheTimeout="60000" name="dbsf_mtindonesia_client" param-delimiter="&amp;" param-leading-delimiter="?" param-separator="=" password="encrypted:10c5cf853925c61deb02f320457ba909833b89e3710fd24551a75c69b9f9eee2dbac1770483eaf11" port="-1" queryTimeout="-1" storage="false" username="sfnbc_mtindonesia_user" validate="false"/><data-source allow="511" blob="true" class="org.gjt.mm.mysql.Driver" clob="true" connectionLimit="100" connectionTimeout="10" custom="" database="dbsf_mtindonesia_payroll" dbdriver="Other" dsn="jdbc:mysql://10.181.26.40:3306/dbsf_nbc_mtindonesia?SelectMethod=direct&amp;noAccessToProcedureBodies=true&amp;allowMultiQueries=true&amp;sendStringParametersAsUnicode=false" host="" metaCacheTimeout="60000" name="dbsf_mtindonesia_payroll" param-delimiter="&amp;" param-leading-delimiter="?" param-separator="=" password="encrypted:f4b2c0989ddcc6bf97b920b1d8b7cf52947c8a45fe0a00872a44e01fd8d7a49f" port="-1" queryTimeout="-1" storage="false" username="sfnbc_mtindonesia_fin" validate="false"/><data-source allow="511" blob="true" class="org.gjt.mm.mysql.Driver" clob="true" connectionLimit="100" connectionTimeout="10" custom="" database="dbsf_mtindonesia_dmart" dbdriver="Other" dsn="jdbc:mysql://10.181.26.40:3306/dbsf_nbc_mtindonesia_dmart?SelectMethod=direct&amp;noAccessToProcedureBodies=true&amp;allowMultiQueries=true&amp;sendStringParametersAsUnicode=false" host="" metaCacheTimeout="60000" name="dbsf_mtindonesia_dmart" param-delimiter="&amp;" param-leading-delimiter="?" param-separator="=" password="encrypted:a0ce67931c6445a1f7fd60888df30fe8eb979c831ede9cf37ad563f7bf18237a0e08552a55dc0972" port="-1" queryTimeout="-1" storage="false" username="sfnbc_mtindonesia_admin" validate="false"/><data-source allow="511" blob="true" class="org.gjt.mm.mysql.Driver" clob="true" connectionLimit="100" connectionTimeout="1" custom="" database="dbsf_mtindonesia_training" dbdriver="Other" dsn="jdbc:mysql://10.181.26.40:3306/dbsf_nbc_mtindonesia_training?SelectMethod=direct&amp;noAccessToProcedureBodies=true&amp;allowMultiQueries=true&amp;sendStringParametersAsUnicode=false" host="" metaCacheTimeout="60000" name="dbsf_mtindonesia_secondary_training" param-delimiter="&amp;" param-leading-delimiter="?" param-separator="=" password="encrypted:4af2ee8f4b962a6100c65fb41ef89aee8c8b86bd7b50953a27bf971e86524c0a6ba4c4179436177e" port="-1" queryTimeout="-1" storage="false" username="sfnbc_mtindonesia_admin" validate="false"/><data-source allow="511" blob="true" class="org.gjt.mm.mysql.Driver" clob="true" connectionLimit="100" connectionTimeout="1" custom="" database="dbsf_mtindonesia_training_dmart" dbdriver="Other" dsn="jdbc:mysql://10.181.26.40:3306/dbsf_nbc_mtindonesia_training_dmart?SelectMethod=direct&amp;noAccessToProcedureBodies=true&amp;allowMultiQueries=true&amp;sendStringParametersAsUnicode=false" host="" metaCacheTimeout="60000" name="dbsf_mtindonesia_secondary_training_dmart" param-delimiter="&amp;" param-leading-delimiter="?" param-separator="=" password="encrypted:3dba7947ecb181cc795f4efef3978285a59f3519d0da683c11d9a581a8f607d0cbeb0a310fd2da69" port="-1" queryTimeout="-1" storage="false" username="sfnbc_mtindonesia_admin" validate="false"/><data-source allow="511" blob="true" class="org.gjt.mm.mysql.Driver" clob="true" connectionLimit="100" connectionTimeout="1" custom="" database="dbsf_mtindonesia_secondary_training_client" dbdriver="Other" dsn="jdbc:mysql://10.181.26.40:3306/dbsf_nbc_mtindonesia_training?SelectMethod=direct&amp;noAccessToProcedureBodies=true&amp;allowMultiQueries=true&amp;sendStringParametersAsUnicode=false" host="" metaCacheTimeout="60000" name="dbsf_mtindonesia_secondary_training_client" param-delimiter="&amp;" param-leading-delimiter="?" param-separator="=" password="encrypted:d829b09448ab2529c8897195cdb9ee39bfc9ad04d857ac7f007e66302e256fd7046d898f1f1ff583" port="-1" queryTimeout="-1" storage="false" username="sfnbc_mtindonesia_user" validate="false"/><data-source allow="511" blob="true" class="org.gjt.mm.mysql.Driver" clob="true" connectionLimit="100" connectionTimeout="1" custom="" database="dbsf_mtindonesia_secondary_training_payroll" dbdriver="Other" dsn="jdbc:mysql://10.181.26.40:3306/dbsf_nbc_mtindonesia_training?SelectMethod=direct&amp;noAccessToProcedureBodies=true&amp;allowMultiQueries=true&amp;sendStringParametersAsUnicode=false" host="" metaCacheTimeout="60000" name="dbsf_mtindonesia_secondary_training_payroll" param-delimiter="&amp;" param-leading-delimiter="?" param-separator="=" password="encrypted:56914b1fbe51cec490409e374b68a630c621c60ab8085318847460295e6b2cfa" port="-1" queryTimeout="-1" storage="false" username="sfnbc_mtindonesia_fin" validate="false"/><data-source allow="511" blob="true" class="org.gjt.mm.mysql.Driver" clob="true" connectionLimit="100" connectionTimeout="10" custom="" database="dbsf6_saas_dmart" dbdriver="Other" dsn="jdbc:mysql://10.181.26.40:3306/dbsf6_saas_mtindonesia?SelectMethod=direct&amp;noAccessToProcedureBodies=true&amp;allowMultiQueries=true&amp;sendStringParametersAsUnicode=false" host="" metaCacheTimeout="60000" name="dbsf6_saas_dmart" param-delimiter="&amp;" param-leading-delimiter="?" param-separator="=" password="encrypted:2000fbba9a80e809000ceca0f9a223647e465929732acaa7ae5e68c12cb5b659" port="-1" queryTimeout="-1" storage="false" username="sst_user" validate="false"/><data-source allow="511" blob="false" class="com.microsoft.sqlserver.jdbc.SQLServerDriver" clob="false" connectionLimit="100" connectionTimeout="20" custom="DATABASENAME=Att_Solution&amp;sendStringParametersAsUnicode=true&amp;SelectMethod=direct" database="Att_Solution" dbdriver="MSSQL" dsn="jdbc:sqlserver://{host}:{port}" host="10.181.26.34" id="mssql" metaCacheTimeout="60000" name="dbfingerjakarta_ATTENDANCE" param-delimiter=";" param-leading-delimiter=";" param-separator="=" password="encrypted:7c14ac7a1328a5f37a55a42f2a032d1ccdb2a60c9588a78c3886f3feac9ef6d8" port="1433" queryTimeout="-1" storage="false" username="att_user3" validate="false"/><data-source allow="511" blob="false" class="com.microsoft.sqlserver.jdbc.SQLServerDriver" clob="false" connectionLimit="100" connectionTimeout="20" custom="DATABASENAME=Att_Solution_Fac&amp;sendStringParametersAsUnicode=true&amp;SelectMethod=direct" database="Att_Solution_Fac" dbdriver="MSSQL" dsn="jdbc:sqlserver://{host}:{port}" host="10.181.26.34" id="mssql" metaCacheTimeout="60000" name="dbfingerbandung_attendance" param-delimiter=";" param-leading-delimiter=";" param-separator="=" password="encrypted:e8b802f716e9e726d97e26ad459797b50d973acd7777c48d06ab4036d5b20db8" port="1433" queryTimeout="-1" storage="false" username="att_user3" validate="false"/><data-source allow="511" blob="true" class="org.gjt.mm.mysql.Driver" clob="true" connectionLimit="100" connectionTimeout="1" custom="" database="dbsf_mtindonesia_secondary_development" dbdriver="Other" dsn="jdbc:mysql://10.181.26.40:3306/dbdev?SelectMethod=direct&amp;noAccessToProcedureBodies=true&amp;allowMultiQueries=true&amp;sendStringParametersAsUnicode=false" host="" metaCacheTimeout="60000" name="dbsf_mtindonesia_secondary_development" param-delimiter="&amp;" param-leading-delimiter="?" param-separator="=" password="encrypted:5ca0753d199a33a0fae356d16a943f45377f4a8a670028151a6c697ff1561bc9" port="-1" queryTimeout="-1" storage="false" username="sst_user" validate="false"/><data-source allow="511" blob="true" class="org.gjt.mm.mysql.Driver" clob="true" connectionLimit="200" connectionTimeout="1" custom="" database="dbsf_mtindonesia_secondary_development_client" dbdriver="Other" dsn="jdbc:mysql://10.181.26.40:3306/dbdev?SelectMethod=direct&amp;noAccessToProcedureBodies=true&amp;allowMultiQueries=true&amp;sendStringParametersAsUnicode=false" host="" metaCacheTimeout="60000" name="dbsf_mtindonesia_secondary_development_client" param-delimiter="&amp;" param-leading-delimiter="?" param-separator="=" password="encrypted:a5ffc77207134dfe8e9a067c97d67aa0403713be6e444542715311e1434c3da7" port="-1" queryTimeout="-1" storage="false" username="sst_user" validate="false"/><data-source allow="511" blob="true" class="org.gjt.mm.mysql.Driver" clob="true" connectionLimit="100" connectionTimeout="1" custom="" database="dbsf_mtindonesia_secondary_development_payroll" dbdriver="Other" dsn="jdbc:mysql://10.181.26.40:3306/dbdev?SelectMethod=direct&amp;noAccessToProcedureBodies=true&amp;allowMultiQueries=true&amp;sendStringParametersAsUnicode=false" host="" metaCacheTimeout="60000" name="dbsf_mtindonesia_secondary_development_payroll" param-delimiter="&amp;" param-leading-delimiter="?" param-separator="=" password="encrypted:af5757a7964ca4a26eba8781f16ab5f5936090f863e59d897a6ff97fa2161174" port="-1" queryTimeout="-1" storage="false" username="sst_user" validate="false"/></data-sources>
+
+	<!--
+		deploy-directory - directory where java classes will be deployed
+		custom-tag-directory - directory where the custom tags are
+		tld-directory / fld-directory - directory where additional Function and Tag Library Deskriptor are.
+		temp-directory - directory for temporary files (upload aso.)
+	 -->
+	<file-system fld-directory="{lucee-config}/library/fld/" function-directory="{lucee-config}/library/function/" tag-directory="{lucee-config}/library/tag/" temp-directory="{lucee-config}/temp/" tld-directory="{lucee-config}/library/tld/">
+	</file-system>
+	
+	
+	<!--
+		writers you can select with attribute format at tag dump
+		name - name of the writer
+		class - class that implement interface "lucee.runtime.dump.DumpWriter"
+		default - is this the default writer for the console or the bowser (browser,console)
+	 -->
+	<dump-writers>
+		<dump-writer class="lucee.runtime.dump.HTMLDumpWriter" default="browser" name="html"/>
+		<dump-writer class="lucee.runtime.dump.TextDumpWriter" default="console" name="text"/>
+		
+		<dump-writer class="lucee.runtime.dump.ClassicHTMLDumpWriter" name="classic"/>
+		<dump-writer class="lucee.runtime.dump.SimpleHTMLDumpWriter" name="simple"/>
+	</dump-writers>
+	
+	
+	<remote-clients directory="{lucee-config}remote-client/"/>
+	
+    <resources>
+        <!--
+        arguments:
+		lock-timeout   - 	define how long a request wait for a lock
+	 	-->
+    	<default-resource-provider arguments="lock-timeout:1000;" class="lucee.commons.io.res.type.file.FileResourceProvider"/>
+    		
+    	<!--
+    	arguments:
+		socket-timeout - 	With this option set to a non-zero timeout, 
+							a read call on the InputStream associated 
+							with this Socket will block for only this amount 
+							of time. 
+							If the timeout expires, a java.net.SocketTimeoutException is raised, 
+							though the Socket is still valid. 
+							The option must be enabled prior to entering the blocking operation to have effect. 
+							The timeout must be > 0. A timeout of zero is interpreted as an infinite timeout.
+							(in milliseconds)
+		client-timeout - 	how long a conection kep established (in milliseconds)
+		lock-timeout   - 	define how long a request wait for a lock (in milliseconds)
+	 	-->
+    	<resource-provider arguments="lock-timeout:20000;socket-timeout:-1;client-timeout:60000" class="lucee.commons.io.res.type.ftp.FTPResourceProvider" scheme="ftp"/>
+    		
+    	<!--
+        arguments:
+		lock-timeout	- 	define how long a request wait for a lock
+		case-sensitive	-	is zip handled case-sensitive or not
+		asynchronus - 		yes or no; define if a buffer is used to synchronize data to zip file.
+							no make resource very slow
+	 	-->
+    	<resource-provider arguments="lock-timeout:1000;case-sensitive:true;" class="lucee.commons.io.res.type.zip.ZipResourceProvider" scheme="zip"/>	
+    	<!--
+        arguments:
+		lock-timeout   - 	define how long a request wait for a lock
+		case-sensitive	-	is zip handled case-sensitive or not
+	 	-->
+    	<resource-provider arguments="lock-timeout:1000;case-sensitive:true;" class="lucee.commons.io.res.type.tar.TarResourceProvider" scheme="tar"/>
+    	<!--
+        arguments:
+		lock-timeout   - 	define how long a request wait for a lock
+		case-sensitive	-	is zip handled case-sensitive or not
+	 	-->
+    	<resource-provider arguments="lock-timeout:1000;case-sensitive:true;" class="lucee.commons.io.res.type.tgz.TGZResourceProvider" scheme="tgz"/>
+    	<!--
+        arguments:
+		lock-timeout   - 	define how long a request wait for a lock
+		case-sensitive	-	is http handled case-sensitive or not
+	 	-->
+    	<resource-provider arguments="lock-timeout:10000;case-sensitive:false;" class="lucee.commons.io.res.type.http.HTTPResourceProvider" scheme="http"/>
+    	<!--
+        arguments:
+		lock-timeout   - 	define how long a request wait for a lock
+		case-sensitive	-	is http handled case-sensitive or not
+	 	-->
+    	<resource-provider arguments="lock-timeout:10000;case-sensitive:false;" class="lucee.commons.io.res.type.http.HTTPSResourceProvider" scheme="https"/>
+    	<!--
+        arguments:
+		lock-timeout   - 	define how long a request wait for a lock
+		case-sensitive	-	is http handled case-sensitive or not
+	 	-->
+    	
+    		
+    	<!--
+    	this providers uses the jcifs library. see http://jcifs.samba.org/
+        arguments:
+		resolveOrder   - 	maps to jcifs.resolveOrder property, defaults to 'DNS'
+		smb.client.dfs.disabled	-	maps to jcifs.smb.client.dfs.disabled property. defaults to 'true'
+		NOTE: these defaults assume DNS lookups instead of workgroup/WINS. These settings make smb interactions faster.
+	 	
+    	<resource-provider 
+    		scheme="smb"
+    		class="lucee.commons.io.res.type.smb.SMBResourceProvider"
+    		arguments=""/>
+    	-->
+    <resource-provider arguments="lock-timeout:10000" bundle-name="s3.extension" bundle-version="0.9.4.119" class="org.lucee.extension.resource.s3.S3ResourceProvider" scheme="s3"/></resources>
+	
+
+	<!--
+	scope configuration:
+	
+		cascading (expanding of undefined scope)
+			- strict (argument,variables)
+			- small (argument,variables,cgi,url,form)
+			- standard (argument,variables,cgi,url,form,cookie)
+			
+		cascade-to-resultset: yes|no
+			when yes also allow inside "output type query" and "loop type query" call implizid call of resultset
+			
+		merge-url-form:yes|no
+			when yes all form and url scope are synonym for both data
+		
+		client-directory-max-size
+			maximum size in bytes of the client scope directory (used for default type file)
+		
+		client-max-age
+			the max age of the client scope in days
+	-->
+	<scope applicationtimeout="1,0,0,0" cascade-to-resultset="true" cascading="standard" cgi-readonly="true" client-directory-max-size="10mb" clientmanagement="false" clientstorage="cookie" clienttimeout="90,0,0,0" local-mode="classic" merge-url-form="false" session-type="jee" sessionmanagement="true" sessionstorage="memory" sessiontimeout="0,2,30,0" setclientcookies="true" setdomaincookies="false"/>
+		
+	<mail spool-enable="yes" spool-interval="5" timeout="30">
+	</mail>
+	
+	<mappings>
+	<!--
+	directory mapping:
+		
+		inspect-template: never|once|always|<empty-string>
+			never - when a template s loaded, lucee no longer checks for changes on that template
+			once - Lucee only once per request check if the file has changed
+			always - check for changes with every access on the file
+			<empty-string> - no mapping specific setting, inherit setting config 
+			
+		virtual:
+			virtual path of the application
+			example: /somedir/
+			
+		physical: 
+			physical path to the apllication
+			example: d:/projects/app1/webroot/somedir/
+			
+		archive:
+			path to a archive file:
+			example: d:/projects/app1/rasfiles/somedir.ras
+		primary: archive|physical
+			define where lucee first look for a called cfml file.
+			for example when you define physical you can partiquel overwrite the archive.
+ -->	
+		<mapping archive="" inspect-template="once" listener-mode="modern" listener-type="curr2root" physical="{lucee-server}/context/" primary="physical" readonly="yes" virtual="/lucee-server/"/>
+		<mapping archive="{lucee-config}/context/lucee-context.lar" inspect-template="once" listener-mode="modern" listener-type="curr2root" physical="{lucee-config}/context/" primary="physical" readonly="yes" virtual="/lucee/"/>
+
+	<mapping archive="{lucee-config}/context/lucee-admin.lar" inspect-template="once" physical="{lucee-config}/context/admin" primary="physical" readonly="true" toplevel="true" virtual="/lucee/admin"/><mapping archive="{lucee-config}/context/lucee-doc.lar" inspect-template="once" primary="archive" readonly="true" toplevel="true" virtual="/lucee/doc"/></mappings>	
+	
+	<custom-tag custom-tag-deep-search="true" custom-tag-local-search="true" extensions="cfc,cfm" use-cache-path="false">
+		<mapping inspect-template="never" physical="{lucee-config}/customtags/"/>
+	<mapping inspect-template="" physical="/media/sf6/ctag/customtag/" primary="physical" virtual="/SunFishTag"/></custom-tag>
+	
+	<ext-tags>
+		<ext-tag class="lucee.cfx.example.HelloWorld" name="HelloWorld" type="java"/>
+	</ext-tags>
+	
+	<!--
+	component:
+		
+		base: 
+			path to base component for every component that have no base component defined 
+		data-member-default-access: remote|public|package|private
+			access type of component data member (variables in this scope)
+	-->
+	<component base-cfml="/lucee/Component.cfc" base-lucee="/lucee/Component.lucee" component-default-import="org.lucee.cfml.*" data-member-default-access="public" deep-search="true" dump-template="/lucee/component-dump.cfm" local-search="true" trigger-data-member="false" use-cache-path="false" use-shadow="true">
+  		<mapping inspect-template="never" physical="{lucee-web}/components/" primary="physical" virtual="/default"/>
+  		<mapping inspect-template="never" physical="{lucee-server}/components/" primary="physical" virtual="/default-server"/>
+	<mapping inspect-template="" physical="/media/sf6/ctag/" primary="physical" virtual="/SunFishCom"/><mapping archive="/opt/lucee/tomcat/lucee-server/context/archives/cfc/cfspreadsheet/cfc-archive-cfspreadsheet.lar" inspect-template="" primary="archive" virtual="/cfspreadsheet"/></component>
+	
+	<!--
+	cache handlers:
+		
+		base: 
+			path to base component for every component that have no base component defined 
+		data-member-default-access: remote|public|package|private
+			access type of component data member (variables in this scope)
+	-->
+	<cache-handlers>
+  		<cache-handler class="lucee.runtime.cache.tag.request.RequestCacheHandler" id="request"/>
+  		<cache-handler class="lucee.runtime.cache.tag.timespan.TimespanCacheHandler" id="timespan"/>
+	</cache-handlers>
+	
+	
+	<!--
+	regional configuration:
+		
+		locale: default: system locale
+			define the locale 
+		timezone: default:maschine configuration
+			the ID for a TimeZone, either an abbreviation such as "PST", 
+			a full name such as "America/Los_Angeles", or a custom ID such as "GMT-8:00". 
+		timeserver: [example: swisstime.ethz.ch] default:local time
+			dns of a ntp time server
+	-->
+	<regional locale="in" timeserver="pool.ntp.org" timezone="Asia/Jakarta" use-timeserver="false"/>
+	
+	<!--
+	orm configuration:
+		
+		engine-class: class that implements interface lucee.runtime.orm.ORMEngine
+		
+		
+		timezone: default:maschine configuration
+			the ID for a TimeZone, either an abbreviation such as "PST", 
+			a full name such as "America/Los_Angeles", or a custom ID such as "GMT-8:00". 
+		timeserver: [example: swisstime.ethz.ch] default:local time
+			dns of a ntp time server
+	-->
+	<orm engine-bundle-name="hibernate.extension" engine-bundle-version="3.5.5.71" engine-class="org.lucee.extension.orm.hibernate.HibernateORMEngine"/>
+	
+	<!--
+		enable and disable debugging
+	 -->
+	<debugging debug="no" log-memory-usage="no" show-query-usage="no" template="/lucee/templates/debugging/debugging.cfm"/>
+	
+		<!--
+	application:
+		
+		listener-type: none|classic|modern|mixed (default: mixed)
+			none:		no application listener handling
+			classic:	search only for Application.cfm
+			modern:		search only for Application.cfc
+			mixed:		search for Application.cfc and Application.cfm
+			
+		listener-mode: root|curr|curr2root (default:curr2root)
+			define where the Application.cfc/Application.cfm will be searched
+			root:			search only in webroot
+			current:		search only in current directory
+			curr2root:	search the App... from current directory up to root. 
+	-->
+	<application allow-url-requesttimeout="true" listener-mode="curr2root" listener-type="mixed" requesttimeout="0,1,30,50" script-protect="all" type-checking="false"/>
+	
+	<update location="http://release.lucee.org" type="manual"/>
+		
+<!--
+LOGGING
+===========================
+
+Possible Layouts:
+- - - - - - - - - - - - - -
+
+Classic: 
+ Same layout as with Lucee 1 - 4.1
+
+HTML: 
+a HTML table, possible arguments are 
+- locationinfo (boolean): By default, it is set to false which means there will be no location information output by this layout. If the the option is set to true, then the file name and line number of the statement at the origin of the log statement will be output.
+- title: The Title option takes a String value. This option sets the document title of the generated HTML document.
+
+XML:
+The output of the XMLLayout consists of a series of log4j:event elements as defined in the log4j.dtd. It does not output a complete well-formed XML file. The output is designed to be included as an external entity in a separate file to form a correct XML file.
+- locationinfo (boolean): By default, it is set to false which means there will be no location information output by this layout. If the the option is set to true, then the file name and line number of the statement at the origin of the log statement will be output.
+- properties: Sets whether MDC key-value pairs should be output, default false.
+
+Pattern:
+A flexible layout configurable with pattern string. 
+- pattern: This is the string which controls formatting and consists of a mix of literal content and conversion specifiers. for more details see: http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/PatternLayout.html
+
+<layout-class>:
+A full class path to a Layout class available in the enviroemnt with a empty constructor.
+for every argument defined lucee tries to call a matching setter method
+
+
+Possible Appenders:
+- - - - - - - - - - - - - -
+
+Console: 
+logs events to to the error or output stream
+- streamtype: "output" or "error" 
+
+Resource:
+Logs error to a resource (locale file, ftp, zip, ...)
+- path: path to the locale file
+-charset (default:resource charset): charset used to write the file
+- maxfiles (default:10): maximal files created
+- maxfilesize (default:1024*1024*10): the maxial size of a log file created
+
+<appender-class>:
+A full class path to a Appender class available in the enviroemnt with a empty constructor.
+for every argument defined lucee tries to call a matching setter method
+
+ -->
+	<logging>
+		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/mapping.log" layout="classic" name="mapping"/>
+		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/rest.log" layout="classic" name="rest"/>
+		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/gateway.log" layout="classic" name="gateway"/>
+		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/remoteclient.log" layout="classic" level="info" name="remoteclient"/>
+		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/orm.log" layout="classic" name="orm"/>
+		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/mail.log" layout="classic" name="mail"/>
+		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/search.log" layout="classic" name="search"/>
+		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/scheduler.log" layout="classic" name="scheduler"/>
+		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/scope.log" layout="classic" name="scope"/>
+		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/application.log" layout="classic" name="application"/>
+		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/exception.log" layout="classic" name="exception"/>
+		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/trace.log" layout="classic" name="trace"/>
+		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/thread.log" layout="classic" name="thread"/>
+		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/deploy.log" layout="classic" level="info" name="deploy"/>
+		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/requesttimeout.log" layout="classic" name="requesttimeout"/>
+		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/memory.log" layout="classic" name="memory"/>
+		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/datasource.log" layout="classic" name="datasource"/>
+	</logging>
+	
+<datasource/><extensions><rhextension categories="Datasource" file-name="114yic6o1sm8f.lex" id="7E673D15-D87C-41A6-8B5F1956528C605F" jdbc="[{'label':'MySQL','id':'mysql','class':'com.mysql.jdbc.Driver','bundleName':'com.mysql.jdbc','bundleVersion':'5.1.40'}]" lucee-core-version="5.0.0.019" name="MySQL" release-type="all" start-bundles="false" trial="false" version="5.1.40"/><rhextension categories="Datasource" file-name="18x289zglqosv.lex" id="99A4EF8D-F2FD-40C8-8FB8C2E67A4EEEB6" jdbc="[{'id':'mssql','label':'Microsoft SQL Server (Vendor Microsoft)','class':'com.microsoft.sqlserver.jdbc.SQLServerDriver','bundleName':'mssqljdbc4','bundleVersion':'4.0.2206.100'}]" lucee-core-version="5.0.0.019" name="Microsoft SQL Server (Vendor Microsoft)" release-type="all" start-bundles="false" trial="false" version="4.0.2206.100"/><rhextension categories="Datasource" file-name="1l4vkhjkk0ndu.lex" id="671B01B8-B3B3-42B9-AC055A356BED5281" jdbc="[{'label':'PostgreSQL','class':'org.postgresql.Driver','bundleName':'org.postgresql.jdbc42','bundleVersion':'9.4.1212'}]" lucee-core-version="5.0.0.019" name="PostgreSQL" release-type="all" start-bundles="false" trial="false" version="9.4.1212"/><rhextension categories="Datasource" file-name="vj1qa9ky3foc.lex" id="2BCD080F-4E1E-48F5-BEFE794232A21AF6" jdbc="[{'label':'jTDS (MSSQL,Sybase)','class':'net.sourceforge.jtds.jdbc.Driver','bundleName':'jtds','bundleVersion':'1.3.1'}]" lucee-core-version="5.0.0.019" name="jTDS (MSSQL,Sybase)" release-type="all" start-bundles="false" trial="false" version="1.3.1"/><rhextension file-name="wnakxokve7b0.lex" id="CED6227E-0F49-6367-A68D21AACA6B07E8" lucee-core-version="5.0.0.050" mapping="[{'virtual':'/lucee/admin','physical':'{lucee-config}/context/admin','archive':'{lucee-config}/context/lucee-admin.lar','primary':'physical ','inspect':'once ','toplevel':'true','readonly':'true','listenermode':'modern','listenertype':'curr2root '}]" name="Lucee Administrator" release-type="all" start-bundles="false" trial="false" version="1.0.0.3"/><rhextension file-name="18buz1m6kzx2m.lex" id="D46D49C3-EB85-8D97-30BEC2F38561E985" lucee-core-version="5.0.0.050" mapping="[{'virtual':'/lucee/doc','physical':'','archive':'{lucee-config}/context/lucee-doc.lar','primary':'archive ','inspect':'once ','toplevel':'true','readonly':'true','listenermode':'modern','listenertype':'curr2root '}]" name="Lucee Documentation" release-type="all" start-bundles="false" trial="false" version="1.0.0.2"/><rhextension file-name="1nixhuugdqul7.lex" id="17AB52DE-B300-A94B-E058BD978511E39E" lucee-core-version="5.0.0.157" name="S3 Resource Extension" release-type="server" resource="[{'class':'org.lucee.extension.resource.s3.S3ResourceProvider','bundleName':'s3.extension','bundleVersion':'0.9.4.119','scheme':'s3','lock-timeout':'10000'}]" start-bundles="false" trial="false" version="0.9.4.119"/><rhextension cache="[{'class':'org.lucee.extension.cache.eh.EHCache','bundleName':'ehcache.extension','bundleVersion':'2.10.0.30'}]" file-name="r0e3ux6db67f.lex" id="87FE44E5-179C-43A3-A87B3D38BEF4652E" lucee-core-version="5.0.0.230" name="EHCache" release-type="server" start-bundles="false" trial="false" version="2.10.0.30"/><rhextension file-name="1d925hoxusnre.lex" id="D46B46A9-A0E3-44E1-D972A04AC3A8DC10" lucee-core-version="5.0.0.244-SNAPSHOT" name="Chart Extension" release-type="server" start-bundles="false" trial="false" version="1.0.19.24"/><rhextension file-name="zgw8qkoxw6xd.lex" id="FAD1E8CB-4F45-4184-86359145767C29DE" lucee-core-version="5.0.0.157" name="Hibernate ORM Engine" orm="[{'class':'org.lucee.extension.orm.hibernate.HibernateORMEngine','name':'hibernate.extension','version':'3.5.5.71'}]" release-type="server" start-bundles="false" trial="false" version="3.5.5.71"/><rhextension file-name="1caill1y2wst3.lex" id="EFDEB172-F52E-4D84-9CD1A1F561B3DFC8" lucee-core-version="5.0.0.157" name="Lucene Search Engine" release-type="server" search="[{'class':'org.lucee.extension.search.lucene.LuceneSearchEngine','bundleName':'lucene.search.extension','bundleVersion':'2.4.1.32'}]" start-bundles="false" trial="false" version="2.4.1.32"/><rhextension file-name="1c9s1gygc3vam.lex" id="66E312DD-D083-27C0-64189D16753FD6F0" lucee-core-version="5.0.0.244-SNAPSHOT" name="PDF Extension" release-type="server" start-bundles="false" trial="false" version="1.0.0.66"/><rhextension file-name="vy9z2bwoxzvb.lex" id="FAD67145-E3AE-30F8-1C11A6CCF544F0B7" lucee-core-version="5.1.0.19" name="Form Tags" release-type="all" start-bundles="false" trial="false" version="1.0.0.9"/><rhextension categories="network" file-name="1e1w4aablvb60.lex" id="3F9DFF32-B555-449D-B0EB5DB723044045" lucee-core-version="5.1.3.18" name="Lucee WebSockets Extension" release-type="all" start-bundles="false" trial="false" version="2.0.3"/><rhextension categories="Application" file-name="jedjbpy6jjq3.lex" id="037A27FF-0B80-4CBA-B954BEBD790B460E" loader-version="5.9" lucee-core-version="5.0.0.252" name="cfspreadsheet" release-type="all" start-bundles="false" trial="false" version="3.0.3"/></extensions><jdbc><driver bundle-name="com.mysql.jdbc" bundle-version="5.1.40" class="com.mysql.jdbc.Driver" id="mysql" label="MySQL"/><driver bundle-name="mssqljdbc4" bundle-version="4.0.2206.100" class="com.microsoft.sqlserver.jdbc.SQLServerDriver" id="mssql" label="Microsoft SQL Server (Vendor Microsoft)"/><driver bundle-name="org.postgresql.jdbc42" bundle-version="9.4.1212" class="org.postgresql.Driver" label="PostgreSQL"/><driver bundle-name="jtds" bundle-version="1.3.1" class="net.sourceforge.jtds.jdbc.Driver" label="jTDS (MSSQL,Sybase)"/></jdbc><caches><cache bundle-name="ehcache.extension" bundle-version="2.10.0.30" class="org.lucee.extension.cache.eh.EHCache"/></caches><search engine-bundle-name="lucene.search.extension" engine-bundle-version="2.4.1.32" engine-class="org.lucee.extension.search.lucene.LuceneSearchEngine"/><queue enable="false"/><setting allow-compression="true" buffering-output="true" cfml-writer="white-space-pref" content-length="" suppress-content="false"/><java inspect-template="once"/><charset resource-charset="UTF-8" template-charset="UTF-8" web-charset="UTF-8"/><error status-code="true" template-404="/lucee/templates/error/error.cfm" template-500="/lucee/templates/error/error.cfm"/></cfLuceeConfiguration>

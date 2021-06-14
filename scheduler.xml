@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<schedule>
+    <task autoDelete="false" file="/media/log/att_upload.log"
+        hidden="false" interval="1200" name="ATT_UPLOAD"
+        password="Tanahabang3.8" paused="false" port="80" proxyHost=""
+        proxyPassword="" proxyPort="0" proxyUser="" publish="true"
+        readonly="false" resolveUrl="false" startDate="{d '2020-01-29'}"
+        startTime="{t '06:00:00'}" timeout="5450000"
+        url="http://localhost:80/sf6/index.cfm?sfid=sys.sec.cron.attupload_schedtask&amp;company_id=21934&amp;machine_code=ATTMAC01&amp;dsn=dbsf_mtindonesia&amp;cocode=mtindonesia&amp;instance=mtindonesia" username="mtindonesia"/>
+    <task autoDelete="false" file="/media/log/att_upload.log"
+        hidden="false" interval="1200" name="ATT_UPLOAD_BANDUNG"
+        password="Tanahabang3.8" paused="false" port="80" proxyHost=""
+        proxyPassword="" proxyPort="0" proxyUser="" publish="true"
+        readonly="false" resolveUrl="false" startDate="{d '2020-01-29'}"
+        startTime="{t '05:20:00'}" timeout="5450000"
+        url="http://localhost:80/sf6/index.cfm?sfid=sys.sec.cron.attupload_schedtask&amp;company_id=21934&amp;machine_code=ATTMAC02&amp;dsn=dbsf_mtindonesia&amp;cocode=mtindonesia&amp;instance=mtindonesia" username="mtindonesia"/>
+    <task autoDelete="false" file="/media/sf6/temp/cron/att_process.log"
+        hidden="false" interval="60" name="ATT_PROCESS_BANDUNG"
+        password="MTP1@dm1*2" paused="false" port="80" proxyHost=""
+        proxyPassword="" proxyPort="0" proxyUser="" publish="true"
+        readonly="false" resolveUrl="true" startDate="{d '2020-01-01'}"
+        startTime="{t '00:20:10'}" timeout="5450000"
+        url="http://localhost:80/sf6/index.cfm?sfid=sys.sec.cron.attprocess_schedtask&amp;company_id=21934&amp;machine_code=ATTMAC02&amp;dsn=dbsf_mtindonesia&amp;cocode=mtindonesia&amp;instance=mtindonesia" username="att_user3"/>
+    <task autoDelete="false" file="/media/sf6/temp/cron/att_process.log"
+        hidden="false" interval="60" name="ATT_PROCESS_JAKARTA"
+        password="MTP1@dm1*2" paused="false" port="80" proxyHost=""
+        proxyPassword="" proxyPort="0" proxyUser="" publish="true"
+        readonly="false" resolveUrl="true" startDate="{d '2020-01-30'}"
+        startTime="{t '00:20:10'}" timeout="5450000"
+        url="http://localhost:80/sf6/index.cfm?sfid=sys.sec.cron.attprocess_schedtask&amp;company_id=21934&amp;machine_code=ATTMAC01&amp;dsn=dbsf_mtindonesia&amp;cocode=mtindonesia&amp;instance=mtindonesia" username="att_user3"/>
+    <task autoDelete="false" endTime="{t '06:00:00'}"
+        file="/media/log/HostDeployPatches.txt" hidden="false"
+        interval="1200" name="Applypatch" paused="false" port="80"
+        proxyHost="" proxyPassword="" proxyPort="0" proxyUser=""
+        publish="true" readonly="false" resolveUrl="false"
+        startDate="{d '2020-01-01'}" startTime="{t '00:00:01'}"
+        timeout="5450000" url="http://localhost:80/sf6/index.cfm?sfid=sys.sec.cron.applypatch&amp;mhost=APP1&amp;noftp=yes"/>
+    <task autoDelete="false" hidden="false" interval="daily"
+        name="HOST LOG CLEANING" paused="false" port="80" proxyHost=""
+        proxyPassword="" proxyPort="0" proxyUser="" publish="false"
+        readonly="false" resolveUrl="false" startDate="{d '2020-01-01'}"
+        startTime="{t '23:30:00'}" timeout="5450000" url="http://localhost:80/sf6/index.cfm?sfid=sys.sec.cron.sweptlogfile&amp;maxfile=100000"/>
+    <task autoDelete="false" hidden="false" interval="600"
+        name="HOST SAAS RENEW LICENSE" paused="false" port="80"
+        proxyHost="" proxyPassword="" proxyPort="0" proxyUser=""
+        publish="false" readonly="false" resolveUrl="false"
+        startDate="{d '2020-01-01'}" startTime="{t '08:32:00'}"
+        timeout="5450000" url="http://localhost:80/sf6/index.cfm?sfid=sys.sec.cron.renewlicense"/>
+    <task autoDelete="false" hidden="false" interval="daily"
+        name="HOST SAAS EXPIRED LICENSE" paused="false" port="80"
+        proxyHost="" proxyPassword="" proxyPort="0" proxyUser=""
+        publish="false" readonly="false" resolveUrl="false"
+        startDate="{d '2020-01-01'}" startTime="{t '06:00:00'}"
+        timeout="5450000" url="http://localhost:80/sf6/index.cfm?sfid=sys.sec.cron.explicense"/>
+    <task autoDelete="false" file="/media/log/EMPLOYEELEAVE.txt"
+        hidden="false" interval="daily" name="EMPLOYEE LEAVE"
+        paused="false" port="80" proxyHost="" proxyPassword=""
+        proxyPort="0" proxyUser="" publish="true" readonly="false"
+        resolveUrl="false" startDate="{d '2020-01-01'}"
+        startTime="{t '23:00:00'}" timeout="5450000" url="http://localhost:80/sf6/index.cfm?sfid=sys.sec.cron.leaveschedule&amp;company_id=21934&amp;dsn=dbsf_mtindonesia&amp;COMPID=21934"/>
+    <task autoDelete="false" file="/media/log/EMPLOYEECAREER.txt"
+        hidden="false" interval="daily" name="EMPLOYEE CAREER"
+        paused="false" port="80" proxyHost="" proxyPassword=""
+        proxyPort="0" proxyUser="" publish="true" readonly="false"
+        resolveUrl="false" startDate="{d '2020-01-01'}"
+        startTime="{t '22:30:00'}" timeout="5450000" url="http://localhost:80/sf6/index.cfm?sfid=sys.sec.cron.careerschedule&amp;dsn=dbsf_mtindonesia&amp;compid=21934"/>
+    <task autoDelete="false" hidden="false" interval="daily"
+        name="Workflow Expiry" paused="false" port="80" proxyHost=""
+        proxyPassword="" proxyPort="0" proxyUser="" publish="false"
+        readonly="false" resolveUrl="false" startDate="{d '2020-02-03'}"
+        startTime="{t '11:50:00'}" timeout="5450000" url="http://localhost:80/sf6/index.cfm?sfid=sys.sec.cron._reqexpiry&amp;istcode=mtindonesia"/>
+    <task autoDelete="false" file="/media/log/ABSOFF.txt" hidden="false"
+        interval="daily" name="ABSOFF" paused="false" port="80"
+        proxyHost="" proxyPassword="" proxyPort="0" proxyUser=""
+        publish="true" readonly="false" resolveUrl="false"
+        startDate="{d '2020-01-01'}" startTime="{t '00:01:00'}"
+        timeout="5450000" url="http://localhost:80/sf6/index.cfm?sfid=sys.sec.cron.presentschedule&amp;dsn=dbsf_mtindonesia&amp;compid=21934"/>
+    <task autoDelete="false" hidden="false" interval="600"
+        name="FORM DEFINITION" paused="false" port="80" proxyHost=""
+        proxyPassword="" proxyPort="0" proxyUser="" publish="false"
+        readonly="false" resolveUrl="false" startDate="{d '2020-01-01'}"
+        startTime="{t '23:43:00'}" timeout="5450000" url="http://localhost:80/sf6/index.cfm?sfid=sys.sec.cron.syncformdef&amp;act=get"/>
+    <task autoDelete="false" file="/media/log/reimbalance.txt"
+        hidden="false" interval="3600" name="Generate Reimburse Plafond"
+        paused="false" port="80" proxyHost="" proxyPassword=""
+        proxyPort="0" proxyUser="" publish="true" readonly="false"
+        resolveUrl="false" startDate="{d '2020-01-01'}"
+        startTime="{t '10:00:00'}" timeout="5450000" url="http://localhost:80/sf6/index.cfm?sfid=sys.sec.cron.reimschedule&amp;compid=21934&amp;dsn=dbsf_mtindonesia"/>
+    <task autoDelete="false" file="/media/log/fetchdashboard.txt"
+        hidden="false" interval="3600" name="Fetch_Data_Dashboard"
+        paused="false" port="80" proxyHost="" proxyPassword=""
+        proxyPort="0" proxyUser="" publish="false" readonly="false"
+        resolveUrl="false" startDate="{d '2020-03-06'}"
+        startTime="{t '07:30:00'}" timeout="5450000" url="http://localhost:80/sf6/index.cfm?sfid=sys.sec.cron.datam_multi&amp;istcode=mtindonesia"/>
+    <task autoDelete="false" file="/media/log/repair.htm" hidden="false"
+        interval="120" name="PerfRepair" paused="false" port="80"
+        proxyHost="" proxyPassword="" proxyPort="0" proxyUser=""
+        publish="true" readonly="false" resolveUrl="false"
+        startDate="{d '2021-04-07'}" startTime="{t '00:00:01'}"
+        timeout="5450000" url="http://localhost:80/sf6/?sfid=sys.sec.cron.repair"/>
+    <task autoDelete="false" file="/media/log/tr_reminder.log"
+        hidden="false" interval="daily" name="Training Reminder"
+        password="Abang-123" paused="false" port="80" proxyHost=""
+        proxyPassword="" proxyPort="0" proxyUser="" publish="true"
+        readonly="false" resolveUrl="false" startDate="{d '2021-04-29'}"
+        startTime="{t '23:00:00'}" timeout="5450000"
+        url="http://localhost:80/sf6/index.cfm?sfid=sys.sec.cron.evalreminder&amp;dsn=dbsf_mtindonesia&amp;cocode=mtindonesia" username="mtindonesia"/>
+</schedule>
