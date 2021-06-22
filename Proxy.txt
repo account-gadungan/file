@@ -1,0 +1,18 @@
+edit file /etc/environment:
+
+http_proxy="http://0492115:qweqwe123@prxb257.plain.sharedom.net:3128"
+https_proxy="http://0492115:qweqwe123@prxb257.plain.sharedom.net:3128"
+#ftp_proxy="ftp://0492115:qweqwe123@gprx003.plain.sharedom.net:10121"
+#no_proxy="prxb257.plain.sharedom.net:3128,.shared-community.net,.sharedom.net,.ghn.mitsubishichem-sys.co.jp,.ghn.mitsubishichem-hd.co.jp,.ghn.m-chemical.co.jp,intranet.tanabe.co.id,.10.181.*,.sts.mt-pharma.co.jp,.10.181.65.20,.10.181.26.* ,.10.181.26.38"
+~
+~
+~
+
+Check proxy active settings:
+env | grep -i proxy
+
+echo $no_proxy
+
+echo $http_proxy
+
+Need to restart server before proxy settings can be actively applied.
