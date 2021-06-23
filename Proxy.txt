@@ -19,3 +19,5 @@ Need to restart server before proxy settings can be actively applied.
 
 
 MTP1@dm1*2
+
+https://www.seefusion.com/seefusion-documentation.cfm#installation
