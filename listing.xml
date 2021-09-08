@@ -1,0 +1,231 @@
+<SFPAGE TITLE="evalform" ACCESS="hrm.performance.evalform:read">
+	<SFGRID DATASOURCE="PerformanceEvaluation" TITLE="Performance Evaluation Form">
+		<TOOLBAR>
+			<!--
+			<BUTTON TIP="Search" ICON="toolicon-search.png" ACTION="?xfid=hrm.performance.simpleperformance.search" LINKTYPE="LINK"></BUTTON>
+			-->
+			<!--
+			<BUTTON TIP="Delete Performance Evaluation" ICON="remove.png" ACTION="?xfid=hrm.performance.evalform.deleteeval" LINKTYPE="LINK" CONDITION="request.scookie.user.utype EQ 9"></BUTTON>
+			-->
+			<BUTTON TIP="360 Question" ICON="360question.png" ACTION="?xfid=hrm.performance.evalform.360question.listing" LINKTYPE="LINK"  ></BUTTON>
+			<BUTTON TIP="Delete Performance Evaluation" ICON="remove.png" ACTION="?xfid=hrm.performance.evalform.deleteeval" LINKTYPE="LINK" CONDITION="StructKeyExists(session.secacces.func,'754') AND session.secacces.func.754 EQ 'D'"></BUTTON>
+			<BUTTON TIP="Performance Evaluation Upload" ICON="upload.png" ACTION="?xfid=hrm.performance.evalform.evalupload" LINKTYPE="LINK"  CONDITION="StructKeyExists(session.secacces.func,'821') AND session.secacces.func.821 EQ 'D'"></BUTTON>
+			<BUTTON TYPE="Print"></BUTTON>
+			<BUTTON TYPE="PDF"></BUTTON>
+			<BUTTON TYPE="Excel"></BUTTON>
+			<BUTTON TYPE="Openoffice"></BUTTON>
+			<BUTTON TYPE="Reload"></BUTTON>
+			<BUTTON TYPE="Help"></BUTTON>
+		</TOOLBAR>
+		<FILTER TEXT="Filter Evaluation by Date" SUBMITLABEL="Go" WIDTH="380" ICON="toolicon-filter.png">
+            <INPUT LABEL="Evaluation Form Date" TYPE="DATE" NAME="startdt" GROUP="tanggal"/>
+            <INPUT LABEL="To" NAME="enddt" TYPE="DATE" GROUP="tanggal~" />
+            <INPUT LABEL="~" NAME="adit" DEFAULT="[emp_id]" TYPE="HIDDEN"/>
+        </FILTER>
+		<!-- <COLUMN TITLE="My Outstanding" FIELD="outs" LOOKUP="YES=Yes" evalform LOOKUPICON="YES=request.png"></COLUMN> -->
+		<COLUMN TITLE="Performance Form" FIELD="formname"></COLUMN>
+		<COLUMN TITLE="Performance Date" FIELD="formdate" FORMAT="sdate"></COLUMN>
+		<COLUMN TITLE="Employee No" FIELD="emp_no"></COLUMN>
+		<COLUMN TITLE="Employee Name" FIELD="emp_name" LINK="javascript:WhatXML('[emp_id];[periodcode];[refdate];[formno];[reqno];[planformno];[reqapporder]');" LINKTYPE="JS" ></COLUMN>
+		<!-- LINK="hrm.performance.evalform.main?empid=[emp_id]&amp;reqno=[reqno]&amp;formno=[formno]&amp;periodcode=[periodcode]&amp;refdate=[refdate]" LINKTYPE="INNERPOP" -->
+		<COLUMN TITLE="Employment Status" FIELD="status"></COLUMN>
+		<COLUMN TITLE="Position" FIELD="emp_pos"></COLUMN>
+		<COLUMN TITLE="Request Status" FIELD="reqstatus" LINK="javascript:PMStatusLink('[emp_id];[periodcode];[refdate];[formno];[reqno];[planformno];[reqapporder]');" LINKTYPE="JS"></COLUMN><!-- LINK="?ofid=RequestInbox.ListRequestByType&amp;reqtype=PERFORMANCE&amp;rno=[reqno]&amp;fButton=true" LINKTYPE="POP" -->
+		<COLUMN TITLE="My Score" FIELD="loginscore"></COLUMN>
+		<COLUMN TITLE="My Conclusion" FIELD="loginconclusion"></COLUMN>
+		<COLUMN TITLE="Final Score" FIELD="score"></COLUMN>
+		<COLUMN TITLE="Final Conclusion" FIELD="conclusion"></COLUMN>
+		<COLUMN TITLE="Previous Step Reviewer" FIELD="lastreviewer"></COLUMN>
+		<COLUMN TITLE="Org Unit Objective" FIELD="linkorg" LINK="hrm.performance.evalform.orgobj&amp;empid=[emp_id]&amp;periodcode=[periodcode]&amp;refdate=[refdate]&amp;planformno=[planformno]" LINKTYPE="INNERPOP"></COLUMN>
+		<!--COLUMN TITLE="Start Date" FIELD="final_startdate" FORMAT="sdate"></COLUMN>
+		<COLUMN TITLE="End Date" FIELD="final_enddate" FORMAT="sdate"></COLUMN-->
+		<!--<COLUMN TITLE="My Outstanding" FIELD="outs" LOOKUP="YES=Yes|NO=No" LOOKUPICON="YES=tick.png|NO=inactive.png"></COLUMN>-->
+		<SCRIPT FOR="FOOTER">
+			var IsUsingNewLayout = parseInt('#REQUEST.CONFIG.NEWLAYOUT_PERFORMANCE#');
+		
+			function WhatXML(str){
+				var arrSTRPF = str.split(';')
+				if(arrSTRPF[arrSTRPF.length-3].length==0){
+				    if(parseInt(IsUsingNewLayout) == 0){
+					    innerPop('?xfid=hrm.performance.evalform.main&amp;empid='+arrSTRPF[0]+'&amp;periodcode='+arrSTRPF[1]+'&amp;refdate='+arrSTRPF[2]+'&amp;planformno='+arrSTRPF[5]+'&amp;formno=&amp;reqno=&amp;reqorder='+arrSTRPF[6],reposBlock);
+					}else{
+					    popWindow('?sfid=hrm.performance.evalform.newlayout.viewevalform&amp;empid='+arrSTRPF[0]+'&amp;periodcode='+arrSTRPF[1]+'&amp;refdate='+arrSTRPF[2]+'&amp;planformno='+arrSTRPF[5]+'&amp;formno=&amp;reqno=&amp;reqorder='+arrSTRPF[6],'popWin',screen.width, screen.height,'location=no,scrollbars=yes,status=no,toolbar=no,resizable=yes,menubar=no');
+					}
+				}
+				else //kalo udah ada request
+				{
+					var varcocode = "#REQUEST.SCOOKIE.COCODE#";
+					var varcoid = "#REQUEST.SCOOKIE.COID#";
+					
+				    if(parseInt(IsUsingNewLayout) == 0){
+					    innerPop('?xfid=hrm.performance.evalform.mainload&amp;empid='+arrSTRPF[0]+'&amp;periodcode='+arrSTRPF[1]+'&amp;refdate='+arrSTRPF[2]+'&amp;formno='+arrSTRPF[3]+'&amp;reqno='+arrSTRPF[4]+'&amp;planformno='+arrSTRPF[5]+'&amp;reqorder='+arrSTRPF[6]+'&amp;varcoid='+varcoid+'&amp;varcocode='+varcocode,reposBlock);
+					}else{
+					    popWindow('?sfid=hrm.performance.evalform.newlayout.viewevalform&amp;empid='+arrSTRPF[0]+'&amp;periodcode='+arrSTRPF[1]+'&amp;refdate='+arrSTRPF[2]+'&amp;formno='+arrSTRPF[3]+'&amp;reqno='+arrSTRPF[4]+'&amp;planformno='+arrSTRPF[5]+'&amp;reqorder='+arrSTRPF[6]+'&amp;varcoid='+varcoid+'&amp;varcocode='+varcocode,'popWin',screen.width, screen.height,'location=no,scrollbars=yes,status=no,toolbar=no,resizable=yes,menubar=no');
+					}
+				}
+			}
+			
+			function PMStatusLink(str){
+				var arrSTRPF = str.split(';')
+				if(arrSTRPF[arrSTRPF.length-3].length==0){
+				    if(IsUsingNewLayout !== 1){
+					    innerPop('?xfid=hrm.performance.evalform.main&amp;empid='+arrSTRPF[0]+'&amp;periodcode='+arrSTRPF[1]+'&amp;refdate='+arrSTRPF[2]+'&amp;planformno='+arrSTRPF[5]+'&amp;formno=&amp;reqno=&amp;reqorder='+arrSTRPF[6],reposBlock);
+				    }else{
+					    popWindow('?sfid=hrm.performance.evalform.newlayout.viewevalform&amp;empid='+arrSTRPF[0]+'&amp;periodcode='+arrSTRPF[1]+'&amp;refdate='+arrSTRPF[2]+'&amp;planformno='+arrSTRPF[5]+'&amp;formno=&amp;reqno=&amp;reqorder='+arrSTRPF[6],'popWin',screen.width, screen.height,'location=no,scrollbars=yes,status=no,toolbar=no,resizable=yes,menubar=no');
+				    }
+				}
+				else //kalo udah ada request
+				{
+					popWindow('?ofid=RequestInbox.ListRequestByType&amp;reqtype=PERFORMANCE.EVALUATION&amp;rno='+arrSTRPF[4]+'&amp;fButton=true','popWin',500,400,null);
+				}
+			}
+			
+			function formatDate(abv) {
+              var tgl = abv.substr(0, 2);
+              var bln = abv.substr(3, 2);
+              var thn = abv.substr(6, 4);
+              return  thn+'/'+bln+'/'+tgl;
+            }
+			function formatDateMm(abv){
+				var bln = abv.substr(0, 2);
+				var tgl = abv.substr(3, 2);
+				var thn = abv.substr(6, 4);
+				return  thn+'/'+bln+'/'+tgl;
+			}
+            
+			function filterSubmit(k) {
+              if ('#REQUEST.CONFIG.DATE_INPUT_FORMAT#' == 'dd/mm/yyyy'){
+			    var stdate = formatDate($('##cal_startdt').val());
+                var endate = formatDate($('##cal_enddt').val());
+			  }else if('#REQUEST.CONFIG.DATE_INPUT_FORMAT#' == 'mm/dd/yyyy'){
+			    var stdate = formatDateMm($('##cal_startdt').val());
+                var endate = formatDateMm($('##cal_enddt').val());
+			  }
+			  
+              var stdate = Date.parse(stdate);
+              var endate = Date.parse(endate);
+              
+              if ($('##cal_startdt').val() == ''){
+                alert("Please Input Start Date");
+                return false;
+              }
+              if ($('##cal_enddt').val() == ''){
+                alert("Please Input End Date");
+                return false;
+              }
+              
+              if(isNaN(stdate) || isNaN(endate)){
+                alert("Invalid Date");
+                return false;
+              }
+              
+              if(endate &lt; stdate){
+                alert("End Date must be greater than Start Date");
+                return false;
+              }
+              hasfilter = false;
+              var e = 0;
+              for (var d = 0; d &lt; arrSearch.length; d++) {
+                if (arrSearch[d][3] == 'filter') {
+                  hasfilter = true;
+                  break;
+                }
+              }
+              if (!hasfilter) {
+                var d = arrSearch.length;
+              }
+              var l = form2query(k, 'input_', true);
+              var b = null;
+              var g = null;
+              for (var c = 0; c &lt; l[0].length; c++) {
+                var a = l[1][c].split('=') [0];
+                var f = $sf(a);
+                if (!f) {
+                  continue;
+                }
+                if (a.substr(0, 4) == 'cal_') {
+                  b = l[0][c];
+                } else {
+                  if (a.substr(0, 4) == 'inp_') {
+                    g = (b ? b : l[0][c]);
+                    if (!hasfilter) {
+                      arrSearch[d] = new Array();
+                      arrSearch[d][0] = a;
+                      arrSearch[d][2] = '';
+                      arrSearch[d][3] = 'filter';
+                      var h = f.parentNode.parentNode.childNodes[0].childNodes[0].innerHTML;
+                      arrSearch[d][5] = h;
+                    }
+                    arrSearch[d][1] = l[1][c].split('=') [1];
+                    arrSearch[d][6] = g;
+                    if (arrSearch[d][1] != '') {
+                      arrSearch[d][4] = 1;
+                      selm = f;
+                      e = d;
+                    } else {
+                      arrSearch[d][4] = 0;
+                    }
+                    b = null;
+                    d++;
+                  }
+                }
+              }
+              arrFilter = arrSearch.slice();
+              if (selm) {
+                checkSubmit(null, selm, e + 1, false);
+              }
+            }
+            
+            $(".sprite-toolbar-360question").css(
+            {
+                "background-position":"-800px 0", 
+                "background-image":"url('/sf6lib/images/icon-sprite-toolbar.png')", 
+                "cursor":"pointer"}
+            );
+           
+            <!-- DIGUNAKAN UNTUK MENGECEK APAKAH EMPLOYEE ID YANG LOGIN INI MEMILIKI 360 QUESTION YANG HARUS DIISI ??  -->
+			function raterCheckQuestion(){
+				getAJAXContent('?ofid=performanceevaluation.checkanyquestion','spAjax',null,function (a,b) { 
+				    var x = JSON.parse(a);
+				    if (x.ISANY &gt; 0){
+				        setInterval(function(){ 
+                        	if ($(".sprite-toolbar-360question").css("visibility") == "visible"){
+                        		$(".sprite-toolbar-360question").css({"visibility": "hidden",  "opacity": "0", "transition": " visibility 0s 2s, opacity 2s linear"})
+                        	}else{
+                        		$(".sprite-toolbar-360question").css({"visibility": "visible",  "opacity": "1", "transition": "opacity 2s linear"})
+                        	}
+                         }, 3000);
+
+				    }
+				});
+			}
+			
+			raterCheckQuestion();
+           
+		</SCRIPT>
+	</SFGRID>
+</SFPAGE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
