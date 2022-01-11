@@ -1,0 +1,78 @@
+#
+# These groups are read by MariaDB server.
+# Use it for options that only the server (but not clients) should see
+#
+# See the examples of server my.cnf files in /usr/share/mysql/
+#
+
+# this is read by the standalone daemon and embedded servers
+[server]
+
+# this is only for the mysqld standalone daemon
+[mysqld]
+port=3306
+bind-address=0.0.0.0
+#
+# * Galera-related settings
+#
+[galera]
+# Mandatory settings
+#wsrep_on=ON
+#wsrep_provider=
+#wsrep_cluster_address=
+#binlog_format=row
+#default_storage_engine=InnoDB
+#innodb_autoinc_lock_mode=2
+#
+# Allow server to accept connections on all interfaces.
+#
+#bind-address=0.0.0.0
+#
+# Optional setting
+#wsrep_slave_threads=1
+#innodb_flush_log_at_trx_commit=0
+
+# this is only for embedded server
+[embedded]
+
+# This group is only read by MariaDB servers, not by MySQL.
+# If you use the same .cnf file for MySQL and MariaDB,
+# you can put MariaDB-only options here
+[mariadb]
+log_error = /var/lib/mysql/mysql_error.log      #errorlog
+general_log_file   = /var/log/mysql/mysql.log
+general_log        = 1
+datadir = /var/lib/mysql        #datadir
+lower_case_table_names = 1      #in-case sensitive
+sql-mode="PIPES_AS_CONCAT"
+skip-host-cache
+skip-name-resolve
+net_buffer_length = 16384
+max_allowed_packet = 1G
+query_cache_size = 0
+query_cache_type = 0
+wait_timeout = 28800
+interactive_timeout = 28800
+default_storage_engine = InnoDB
+innodb_data_home_dir = /var/lib/mysql
+innodb_log_group_home_dir = /var/lib/mysql
+innodb_file_per_table = 1
+innodb_autoinc_lock_mode = 2
+innodb_flush_log_at_trx_commit = 0
+innodb_doublewrite = 1
+binlog_format = ROW
+innodb_buffer_pool_size = 8G   #x is 1/2 total of ram (if ram is 16G, then set this x to 8G)
+innodb_buffer_pool_instances = 4        #x is equal with above but without G (if above is 8G, then set this x to 8)
+innodb_log_file_size = 2G       #x is 1/4 total of innodb_buffer_pool_size (if innodb_buffer_pool_size is 8G, then set this x to 2G)
+max_connections = 1000
+#join_buffer_size = 128M
+#max_heap_table_size = 128M
+#tmp_table_size = 128M
+#key_buffer_size = 128M
+#table_open_cache = 2048
+
+# This group is only read by MariaDB-10.2 servers.
+# If you use the same .cnf file for MariaDB of different versions,
+# use this group for options that older servers don't understand
+[mariadb-10.2]
+
